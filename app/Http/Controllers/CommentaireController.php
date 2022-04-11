@@ -6,6 +6,8 @@ use Exception;
 use App\Models\Commentaire;
 use App\Models\Manga;
 use Illuminate\Console\Command;
+use Symfony\Component\CssSelector\Node\NegationNode;
+use Illuminate\Http\Request;
 
 class CommentaireController extends Controller {
 
@@ -42,8 +44,16 @@ class CommentaireController extends Controller {
      * Ajoute un Manga
      * @return Manga créé
      */
-    public function store(Response $response) {
+    public function store(Request $request) {
         try {
+            $commentaire = new Commentaire();
+            $commentaire->lib_commentaire = $request->input('lib_commentaire');
+            $commentaire->id_manga = $request->input('id_manga');
+            $commentaire->id_lecteur = $request->input('id_lecteur');
+            $commentaire->save();
+            return response()->json($commentaire, 201);
+
+
 
         } catch (Exception $ex) {
 
@@ -54,8 +64,12 @@ class CommentaireController extends Controller {
      * Mise à jour d'un Commentaire
      * @return Commentaire modifié
      */
-    public function update(Response $response) {
+    public function update(Request $request) {
         try {
+            $commentaire = Commentaire::find($request->input('id_commentaire'));
+            $commentaire->lib_commentaire = $request->input('lib_commentaire');
+            $commentaire->save();
+            return response()->json($commentaire, 200);
 
         } catch (Exception $ex) {
 
@@ -69,6 +83,10 @@ class CommentaireController extends Controller {
      */
     public function delete($id) {
         try {
+            $commentaire = Commentaire::find($id);
+            $commentaire->delete();
+            response()->json('commentaire supprimé', 200);
+
 
         } catch (Exception $ex) {
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DessinateurController;
+use App\Http\Controllers\MangaController;
 use App\Models\Dessinateur;
 use Illuminate\Http\Request;
 
@@ -59,7 +60,30 @@ Route::put('/dessinateur', 'DessinateurController@update');
 Route::delete('/dessinateur/{id}', 'DessinateurController@delete');
 
 //ajout d'un manga
-Route::post('/manga','MangaController@store' )
+Route::post('/manga','MangaController@store' );
+
+//mise à jour d'un manga
+Route::put('/manga' ,'MangaController@update');
+
+//suppression d'un manga
+Route::delete('/manga/{id}', 'MangaController@delete');
+
+
+
+//creation d'un commentaire
+Route::post('/commentaire','CommentaireController@store');
+
+// mise a jour d'un commentaire
+Route::put("/commentaire",'CommentaireController@update');
+
+//suppression d'un commentaire
+
+Route::delete('commentaire/{id}', 'CommentaireController@delete' );
+
+
+
+
+
 
 
 

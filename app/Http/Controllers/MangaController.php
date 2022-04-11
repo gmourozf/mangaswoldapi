@@ -60,6 +60,7 @@ class MangaController extends Controller {
 
 
         } catch (Exception $ex) {
+            echo $ex->getMessage();
 
         }
     }
@@ -70,8 +71,48 @@ class MangaController extends Controller {
      */
     public function update(Request $request) {
         try {
+            $id_manga = $request->input('id_manga');
+            $manga = Manga::find($id_manga);
+
+            if ($request->input('couverture')) {
+                $manga->couverture = $request->input('couverture');
+            }
+
+            if ($request->input('id_dessinateur')) {
+                $manga->id_dessinateur = $request->input('id_dessinateur');
+            }
+
+            if ($request->input('id_genre')) {
+                $manga->id_genre = $request->input('id_genre');
+            }
+
+            if ($request->input('id_lecteur')) {
+                $manga->id_lecteur = $request->input('id_lecteur');
+            }
+
+            if ($request->input('id_scenariste')) {
+                $manga->id_scenariste = $request->input('id_scenariste');
+
+            }
+
+            if ($request->input('prix')) {
+                $manga->prix = $request->input('prix');
+
+            }
+
+                $manga->titre = $request->input('titre');
+
+            if (  $request->input('titre')) {
+                $manga->titre = $request->input('titre');
+
+            }
+
+            $manga->save();
+            return response()->json($manga, 200);
+
 
         } catch (Exception $ex) {
+          echo  $ex->getMessage();
 
         }
     }
@@ -84,7 +125,12 @@ class MangaController extends Controller {
     public function delete($id) {
         try {
 
+            $manga = Manga::find($id);
+            $manga->delete();
+            return response()->json("manga supprimé", 200);
+
         } catch (Exception $ex) {
+            echo $ex->getMessage();
 
         }
     }
